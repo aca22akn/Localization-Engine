@@ -358,7 +358,7 @@ downloadBtn.addEventListener('click', downloadReport);
 // ── API call ─────────────────────────────────────────────────────────────────
 
 async function runAnalysis(websiteUrl, instagramHandle, brandName) {
-  const response = await fetch('http://localhost:3001/api/analyse', {
+  const response = await fetch('/api/analyse', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ websiteUrl, instagramHandle, brandName }),

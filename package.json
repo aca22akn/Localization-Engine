@@ -2,13 +2,11 @@
   "name": "uk-market-localization-engine",
   "version": "1.0.0",
   "description": "Backend server for UK Market Localization Engine — analyses Pakistani fashion brand websites for UK market readiness",
-  "main": "server.js",
+  "main": "api/analyse.js",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.30.0",
     "cheerio": "^1.0.0",
-    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.18.0",
     "node-fetch": "^2.7.0"
   }
 }

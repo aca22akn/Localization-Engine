@@ -2,16 +2,13 @@
 
 require('dotenv').config();
 
-const express  = require('express');
-const cors     = require('cors');
 const fetch    = require('node-fetch');
 const cheerio  = require('cheerio');
 const Anthropic = require('@anthropic-ai/sdk');
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const PORT           = 3001;
-const FETCH_TIMEOUT  = 8000;   // ms per page fetch
+const FETCH_TIMEOUT  = 3000;   // ms per page fetch
 const MAX_TEXT_CHARS = 40000;  // safety cap on total combined text
 const CLAUDE_MODEL   = 'claude-sonnet-4-5';
 const MAX_TOKENS     = 4096;
@@ -21,7 +18,7 @@ const USER_AGENT =
   '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
 // Max sub-pages to fetch (homepage is always fetched separately)
-const MAX_PAGES = 15;
+const MAX_PAGES = 5;
 
 // Expanded hardcoded fallback paths — covers Shopify, WooCommerce and custom patterns
 const SUB_PATHS = [
@@ -61,13 +58,9 @@ const SUB_PATHS = [
   '/policies/privacy-policy',
 ];
 
-// ── Express setup ────────────────────────────────────────────────────────────
+// ── Anthropic client ─────────────────────────────────────────────────────────
 
-const app    = express();
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-app.use(cors());
-app.use(express.json());
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -307,9 +300,15 @@ function transformToFrontendShape(claude, websiteUrl, instagramHandle) {
   };
 }
 
-// ── Route ────────────────────────────────────────────────────────────────────
+// ── Vercel serverless handler ─────────────────────────────────────────────────
 
-app.post('/api/analyse', async (req, res) => {
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
   const { websiteUrl, instagramHandle, brandName, pastedContent } = req.body;
 
   // ── Step A: scrape the website ───────────────────────────────────────────
@@ -357,10 +356,4 @@ app.post('/api/analyse', async (req, res) => {
   // ── Step D: transform to frontend shape and return ───────────────────────
   const result = transformToFrontendShape(claudeJson, websiteUrl, instagramHandle);
   return res.status(200).json(result);
-});
-
-// ── Start ────────────────────────────────────────────────────────────────────
-
-app.listen(PORT, () => {
-  console.log(`UK Market Localization Engine — server running on http://localhost:${PORT}`);
-});
+};
