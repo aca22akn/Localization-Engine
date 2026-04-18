@@ -1,11 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "api/analyse.js", "use": "@vercel/node" }
+    { "src": "api/analyse.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.css", "use": "@vercel/static" },
+    { "src": "*.js", "use": "@vercel/static",
+      "config": { "excludeFiles": "api/**" } }
   ],
   "routes": [
     { "src": "/api/analyse", "dest": "/api/analyse.js" },
+    { "src": "/(.*\\.(css|js))", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
