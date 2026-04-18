@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Market Localization Engine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-flag">&#127468;&#127463;</span>
+        <div>
+          <h1 class="header-title">UK Market Localization Engine</h1>
+          <p class="header-sub">Brand trust analysis for Pakistani fashion entering the UK market</p>
+        </div>
+      </div>
+      <div class="header-badge">Powered by Claude AI</div>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <main class="layout">
+
+    <!-- LEFT: Input form -->
+    <aside class="panel panel--form">
+      <div class="panel-header">
+        <h2 class="panel-title">Analyse Your Brand</h2>
+        <p class="panel-desc">Enter your details below. Our engine will score your brand across 9 trust dimensions that UK customers care about.</p>
+      </div>
+
+      <form id="analysisForm" class="form" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="websiteUrl">
+            Website URL
+            <span class="form-required">Required</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <input
+              type="url"
+              id="websiteUrl"
+              name="websiteUrl"
+              class="form-input"
+              placeholder="https://yourbrand.com"
+              autocomplete="off"
+            />
+          </div>
+          <span class="form-hint">Include https:// — we'll analyse your homepage, About page and policy pages</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="instagramHandle">
+            Instagram Handle <span class="form-optional">(optional)</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon input-icon--at">@</span>
+            <input
+              type="text"
+              id="instagramHandle"
+              name="instagramHandle"
+              class="form-input form-input--at"
+              placeholder="yourbrand"
+              autocomplete="off"
+            />
+          </div>
+          <span class="form-hint">Without the @ symbol — we'll review your bio, captions and social proof</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="brandName">
+            Brand Name <span class="form-optional">(optional)</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </span>
+            <input
+              type="text"
+              id="brandName"
+              name="brandName"
+              class="form-input"
+              placeholder="e.g. Zara Karachi, Threads & Co."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div id="formError" class="form-error" hidden>
+          Please enter a website URL before running the analysis.
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-submit__text">Run Localization Analysis</span>
+          <span class="btn-submit__icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+
+        <p class="form-disclaimer">
+          Analysis typically takes 20–40 seconds. We'll review your website copy, policies, pricing and social presence against UK consumer expectations.
+        </p>
+
+      </form>
+
+      <!-- What we check -->
+      <div class="checklist-box">
+        <h3 class="checklist-title">9 Dimensions We Score</h3>
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="checklist-num">1</span>
+            <span>Tone &amp; communication style</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">2</span>
+            <span>Pricing &amp; currency clarity (GBP)</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">3</span>
+            <span>Delivery information</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">4</span>
+            <span>Social proof &amp; reviews</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">5</span>
+            <span>Returns &amp; refund policy</span>
+            <span class="checklist-tag">CRA 2015</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">6</span>
+            <span>Payment trust signals</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">7</span>
+            <span>After-sale support</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">8</span>
+            <span>Value narrative</span>
+          </li>
+          <li class="checklist-item">
+            <span class="checklist-num">9</span>
+            <span>Overall brand image</span>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT: Report output -->
+    <section class="panel panel--report" id="reportPanel">
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3 class="empty-title">Your report will appear here</h3>
+        <p class="empty-desc">Enter your website URL and Instagram handle, then click <strong>Run Localization Analysis</strong> to receive your scored brand report.</p>
+        <div class="empty-preview">
+          <div class="empty-preview-row">
+            <div class="empty-bar empty-bar--short"></div>
+            <div class="empty-score-pill"></div>
+          </div>
+          <div class="empty-preview-row">
+            <div class="empty-bar empty-bar--long"></div>
+            <div class="empty-score-pill"></div>
+          </div>
+          <div class="empty-preview-row">
+            <div class="empty-bar empty-bar--med"></div>
+            <div class="empty-score-pill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="loading-state" id="loadingState" hidden>
+        <div class="loading-spinner"></div>
+        <h3 class="loading-title">Analysing your brand&hellip;</h3>
+        <p class="loading-desc" id="loadingMessage">Reviewing website copy and policies</p>
+        <div class="loading-steps" id="loadingSteps">
+          <div class="loading-step active" id="step1">
+            <span class="loading-step__dot"></span>
+            <span>Fetching website content</span>
+          </div>
+          <div class="loading-step" id="step2">
+            <span class="loading-step__dot"></span>
+            <span>Reviewing Instagram presence</span>
+          </div>
+          <div class="loading-step" id="step3">
+            <span class="loading-step__dot"></span>
+            <span>Scoring against UK trust dimensions</span>
+          </div>
+          <div class="loading-step" id="step4">
+            <span class="loading-step__dot"></span>
+            <span>Generating fixed copy &amp; compliant policies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report output -->
+      <div class="report" id="reportOutput" hidden>
+
+        <!-- Report header -->
+        <div class="report-header">
+          <div class="report-header__left">
+            <div class="report-brand-name" id="reportBrandName">Brand Name</div>
+            <div class="report-meta" id="reportMeta">yourbrand.com &nbsp;·&nbsp; @handle</div>
+          </div>
+          <div class="report-header__right">
+            <div class="report-overall-wrap">
+              <div class="report-overall-label">Overall Score</div>
+              <div class="report-overall-score" id="overallScore">—</div>
+              <div class="report-overall-denom">/10</div>
+            </div>
+            <button class="btn-download" id="downloadBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Overall verdict -->
+        <div class="report-verdict" id="reportVerdict"></div>
+
+        <!-- Score summary bar -->
+        <div class="score-summary" id="scoreSummary"></div>
+
+        <!-- Dimension cards -->
+        <div class="dimensions" id="dimensionsContainer"></div>
+
+        <!-- Footer -->
+        <div class="report-footer">
+          <p>Generated by the UK Market Localization Engine &nbsp;·&nbsp; <span id="reportDate"></span></p>
+          <p>Returns policy check based on UK Consumer Rights Act 2015. Scores reflect UK consumer trust expectations.</p>
+        </div>
+
+      </div>
+
+      <!-- Error state -->
+      <div class="error-state" id="errorState" hidden>
+        <div class="error-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3 class="error-title">Analysis failed</h3>
+        <p class="error-desc" id="errorMessage">Something went wrong. Please check your inputs and try again.</p>
+        <button class="btn-retry" id="retryBtn">Try Again</button>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
