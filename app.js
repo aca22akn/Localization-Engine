@@ -83,17 +83,23 @@ function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
 
 // ── Loading step animation ───────────────────────────────────────────────────
 
-function startLoadingAnimation() {
-  steps.forEach(s => { s.classList.remove('active', 'done'); });
-  steps[0].classList.add('active');
+function startLoadingAnimation(instagramHandle) {
+  // step2 (index 1) is "Reviewing Instagram presence" — hide it if no handle provided
+  const hasInstagram = !!instagramHandle;
+  steps[1].hidden = !hasInstagram;
+
+  const activeSteps = hasInstagram ? steps : steps.filter((_, i) => i !== 1);
+
+  activeSteps.forEach(s => { s.classList.remove('active', 'done'); });
+  activeSteps[0].classList.add('active');
 
   let current = 0;
   stepTimer = setInterval(() => {
-    steps[current].classList.remove('active');
-    steps[current].classList.add('done');
+    activeSteps[current].classList.remove('active');
+    activeSteps[current].classList.add('done');
     current++;
-    if (current < steps.length) {
-      steps[current].classList.add('active');
+    if (current < activeSteps.length) {
+      activeSteps[current].classList.add('active');
     } else {
       clearInterval(stepTimer);
     }
@@ -427,7 +433,7 @@ form.addEventListener('submit', async (e) => {
 
   submitBtn.disabled = true;
   showPanel('loading');
-  startLoadingAnimation();
+  startLoadingAnimation(instagramHandle);
 
   try {
     let reportData;
