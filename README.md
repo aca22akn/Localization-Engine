@@ -20,3 +20,5 @@ node server.js
 ```
 
 The server runs on `http://localhost:3001`. Open `index.html` in your browser to use the tool.
+
+checking for collaborators  access
